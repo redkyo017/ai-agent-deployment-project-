@@ -5,15 +5,9 @@ from openai import OpenAI  # type: ignore
 
 from dotenv import load_dotenv
 import os
-
-env = os.getenv("APP_ENV", "unknown")
-if env == "unknown":
-    load_dotenv()
-    openai_api_key = os.getenv("OPENAI_API_KEY")
-    if openai_api_key:
-        client = OpenAI(api_key=openai_api_key)
-else:
-    client = OpenAI()
+load_dotenv()
+# openai_api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI()
 
 origins = [
     "http://localhost",
