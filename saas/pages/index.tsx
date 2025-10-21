@@ -9,7 +9,8 @@ export default function Home() {
   const [idea, setIdea] = useState<string>("…loading");
 
   useEffect(() => {
-    const evt = new EventSource("http://localhost:8000/api");
+    // const evt = new EventSource("http://localhost:8000/api");
+    const evt = new EventSource("/api");
     let buffer = "";
 
     evt.onmessage = (e) => {
