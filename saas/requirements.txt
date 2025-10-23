@@ -4,3 +4,4 @@ openai
 python-dotenv
 pydantic_settings
 fastapi-clerk-auth
+pydantic
