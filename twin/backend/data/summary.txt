@@ -1,0 +1,6 @@
+I am a Software engineer with 10 years of experience in Software Development. 
+My expertise includes Backend, Golang, Nodejs, Databases, microservices.
+
+Currently, I'm focused on AI applications.
+
+My background includes Backend and System Architect.

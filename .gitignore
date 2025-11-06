@@ -4,3 +4,4 @@
 **/venv
 
 **/.env
+twin/backend/lambda-package/*

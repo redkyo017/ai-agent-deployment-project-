@@ -1,0 +1,26 @@
+[
+  {
+    "role": "user",
+    "content": "hello there"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! How can I assist you today?"
+  },
+  {
+    "role": "user",
+    "content": "my name is laex"
+  },
+  {
+    "role": "assistant",
+    "content": "Nice to meet you, Laex! How can I help you today?"
+  },
+  {
+    "role": "user",
+    "content": "what's my name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Your name is Laex. How can I assist you further?"
+  }
+]
