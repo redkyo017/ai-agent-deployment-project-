@@ -99,7 +99,7 @@ export default function Twin() {
   // Check if avatar exists
   const [hasAvatar, setHasAvatar] = useState(false);
   useEffect(() => {
-    // Check if avatar.png exists
+    // Check if avatar.jpg exists
     fetch("/avatar.jpg", { method: "HEAD" })
       .then((res) => setHasAvatar(res.ok))
       .catch(() => setHasAvatar(false));
@@ -145,7 +145,7 @@ export default function Twin() {
               <div className="flex-shrink-0">
                 {hasAvatar ? (
                   <img
-                    src="/avatar.png"
+                    src="/avatar.jpg"
                     alt="Digital Twin Avatar"
                     className="w-8 h-8 rounded-full border border-slate-300"
                   />
@@ -189,7 +189,7 @@ export default function Twin() {
             <div className="flex-shrink-0">
               {hasAvatar ? (
                 <img
-                  src="/avatar.png"
+                  src="/avatar.jpg"
                   alt="Digital Twin Avatar"
                   className="w-8 h-8 rounded-full border border-slate-300"
                 />
