@@ -1,0 +1,3 @@
+the role ARN from the output: "arn:aws:iam::884185907314:role/github-actions-twin-deploy"
+
+"Arn": "arn:aws:iam::884185907314:oidc-provider/token.actions.githubusercontent.com"
