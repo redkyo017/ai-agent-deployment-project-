@@ -24,8 +24,8 @@ load_dotenv(override=True)
 logger = logging.getLogger(__name__)
 
 # Get configuration
-BEDROCK_MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "us.anthropic.claude-3-7-sonnet-20250219-v1:0")
-BEDROCK_REGION = os.getenv("BEDROCK_REGION", "us-west-2")
+BEDROCK_MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "apac.anthropic.claude-3-7-sonnet-20250219-v1:0")
+BEDROCK_REGION = os.getenv("BEDROCK_REGION", "ap-southeast-2")
 
 
 class AllocationBreakdown(BaseModel):
@@ -175,7 +175,7 @@ async def classify_instrument(
         model_id = BEDROCK_MODEL_ID
 
         # Set region for LiteLLM Bedrock calls
-        bedrock_region = os.getenv("BEDROCK_REGION", "us-west-2")
+        bedrock_region = os.getenv("BEDROCK_REGION", "ap-southeast-2")
         os.environ["AWS_REGION_NAME"] = bedrock_region
 
         model = LitellmModel(model=f"bedrock/{model_id}")
