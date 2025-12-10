@@ -95,7 +95,7 @@ async def general_exception_handler(request: Request, exc: Exception):
 db = Database()
 
 # SQS client for job queueing
-sqs_client = boto3.client('sqs', region_name=os.getenv('DEFAULT_AWS_REGION', 'us-east-1'))
+sqs_client = boto3.client('sqs', region_name=os.getenv('DEFAULT_AWS_REGION', 'ap-southeast-2'))
 SQS_QUEUE_URL = os.getenv('SQS_QUEUE_URL', '')
 
 # Clerk authentication setup (exactly like saas reference)
