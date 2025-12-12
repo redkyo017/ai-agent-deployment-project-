@@ -25,6 +25,8 @@ from templates import ORCHESTRATOR_INSTRUCTIONS
 from agent import create_agent, handle_missing_instruments, load_portfolio_summary
 from market import update_instrument_prices
 from observability import observe
+import json
+from datetime import datetime, timezone
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -40,6 +42,22 @@ db = Database()
 )
 async def run_orchestrator(job_id: str) -> None:
     """Run the orchestrator agent to coordinate portfolio analysis."""
+    start_time = datetime.now(timezone.utc)
+
+    # Fetch the job once so we can log who triggered the run
+    job = db.jobs.find_by_id(job_id)
+    if not job:
+        logger.error(f"Planner: Job {job_id} not found.")
+        return
+    user_id = job["clerk_user_id"]
+
+    logger.info(json.dumps({
+        "event": "PLANNER_STARTED",
+        "job_id": job_id,
+        "user_id": user_id,
+        "timestamp": start_time.isoformat(),
+    }))
+
     try:
         # Update job status to running
         db.jobs.update_status(job_id, 'running')

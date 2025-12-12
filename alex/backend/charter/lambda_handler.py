@@ -228,6 +228,42 @@ def lambda_handler(event, context):
                 })
             }
 
+# class AgentTemporaryError(Exception):
+#     """Temporary error that should trigger retry"""
+#     pass
+
+# @retry(
+#     stop=stop_after_attempt(3),
+#     wait=wait_exponential(multiplier=1, min=2, max=10),
+#     retry=retry_if_exception_type((AgentTemporaryError, TimeoutError))
+# )        
+# async def invoke_agent_with_retry(
+#     agent_name: str,
+#     payload: dict
+# ) -> dict:
+#     """Invoke agent with automatic retry using tenacity"""
+#     try:
+#         response = await lambda_client.invoke(
+#             FunctionName=f"alex-{agent_name}",
+#             InvocationType='RequestResponse',
+#             Payload=json.dumps(payload)
+#         )
+
+#         result = json.loads(response['Payload'].read())
+
+#         # Check for retryable errors in response
+#         if result.get('error_type') == 'RATE_LIMIT':
+#             raise AgentTemporaryError(f"Rate limit hit for {agent_name}")
+
+#         return result
+
+#     except Exception as e:
+#         logger.warning(f"Agent {agent_name} invocation failed: {e}")
+#         # Determine if error is retryable
+#         if "throttled" in str(e).lower() or "timeout" in str(e).lower():
+#             raise AgentTemporaryError(f"Temporary error: {e}")
+#         raise  # Non-retryable error
+
 # For local testing
 if __name__ == "__main__":
     test_event = {

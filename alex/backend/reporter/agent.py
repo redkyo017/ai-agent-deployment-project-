@@ -229,3 +229,35 @@ Provide your complete analysis as the final output in clear markdown format.
 Make the report informative yet accessible to a retail investor."""
 
     return model, tools, task, context
+
+# class AuditLogger:
+#     @staticmethod
+#     def log_ai_decision(
+#         agent_name: str,
+#         job_id: str,
+#         input_data: dict,
+#         output_data: dict,
+#         model_used: str,
+#         duration_ms: int
+#     ):
+#         audit_entry = {
+#             "timestamp": datetime.utcnow().isoformat(),
+#             "agent": agent_name,
+#             "job_id": job_id,
+#             "model": model_used,
+#             "input_hash": hashlib.sha256(
+#                 json.dumps(input_data, sort_keys=True).encode()
+#             ).hexdigest(),
+#             "output_summary": {
+#                 "type": type(output_data).__name__,
+#                 "size_bytes": len(json.dumps(output_data))
+#             },
+#             "duration_ms": duration_ms,
+#             "compliance_check": "PASS"  # Add actual compliance logic
+#         }
+
+#         # Store in CloudWatch for long-term retention
+#         logger.info(json.dumps(audit_entry))
+
+#         # Could also store in DynamoDB for querying
+#         return audit_entry

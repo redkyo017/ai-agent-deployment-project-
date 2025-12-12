@@ -36,6 +36,17 @@ load_dotenv(override=True)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+class StructuredLogger:
+    @staticmethod
+    def log_event(event_type, user_id=None, details=None):
+        log_entry = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "event_type": event_type,
+            "user_id": user_id,
+            "details": details
+        }
+        logger.info(json.dumps(log_entry))
+
 # Initialize FastAPI app
 app = FastAPI(
     title="Alex Financial Advisor API",
@@ -492,7 +503,11 @@ async def list_instruments(clerk_user_id: str = Depends(get_current_user_id)):
 @app.post("/api/analyze", response_model=AnalyzeResponse)
 async def trigger_analysis(request: AnalyzeRequest, clerk_user_id: str = Depends(get_current_user_id)):
     """Trigger portfolio analysis"""
-
+    StructuredLogger.log_event(
+        "ANALYSIS_TRIGGERED",
+        user_id=clerk_user_id,
+        details={"accounts": clerk_user_id}
+    )
     try:
         # Get user
         user = db.users.find_by_clerk_id(clerk_user_id)

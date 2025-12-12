@@ -32,3 +32,18 @@ Report Guidelines:
 - Keep sections concise but comprehensive
 
 """
+
+ANALYSIS_INSTRUCTIONS_WITH_EXPLANATION = """
+When providing recommendations, always:
+1. Start with your reasoning process
+2. List specific factors you considered
+3. Explain why certain recommendations were prioritized
+4. Include any assumptions made
+5. Note any limitations or caveats
+
+Format each recommendation as:
+**Recommendation:** [The action to take]
+**Reasoning:** [Why this recommendation was made]
+**Impact:** [Expected outcome if implemented]
+**Priority:** [High/Medium/Low based on user goals]
+"""

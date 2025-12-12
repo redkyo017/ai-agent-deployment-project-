@@ -12,6 +12,81 @@ from templates import CHARTER_INSTRUCTIONS, create_charter_task
 
 logger = logging.getLogger()
 
+def validate_chart_data(chart_json: str) -> tuple[bool, str, Dict[Any, Any]]:
+    """
+    Validates that charter agent output is well-formed JSON with expected structure.
+    Returns (is_valid, error_message, parsed_data)
+    """
+    try:
+        # Parse JSON
+        data = json.loads(chart_json)
+
+        # Validate expected structure
+        required_keys = ["charts"]
+        if not all(key in data for key in required_keys):
+            return False, f"Missing required keys. Expected: {required_keys}", {}
+
+        # Validate charts array
+        if not isinstance(data["charts"], list):
+            return False, "Charts must be an array", {}
+
+        # Validate each chart
+        for i, chart in enumerate(data["charts"]):
+            if "type" not in chart:
+                return False, f"Chart {i} missing 'type' field", {}
+
+            if "data" not in chart:
+                return False, f"Chart {i} missing 'data' field", {}
+
+            # Validate chart data is array
+            if not isinstance(chart["data"], list):
+                return False, f"Chart {i} data must be an array", {}
+
+            # Validate data points have required fields based on chart type
+            if chart["type"] == "pie":
+                for point in chart["data"]:
+                    if "name" not in point or "value" not in point:
+                        return False, f"Pie chart data points must have 'name' and 'value'", {}
+            elif chart["type"] == "bar":
+                for point in chart["data"]:
+                    if "category" not in point:
+                        return False, f"Bar chart data points must have 'category'", {}
+
+        return True, "", data
+
+    except json.JSONDecodeError as e:
+        logger.error(f"Invalid JSON from charter agent: {e}")
+        return False, f"Invalid JSON: {e}", {}
+    except Exception as e:
+        logger.error(f"Unexpected error validating chart data: {e}")
+        return False, f"Validation error: {e}", {}
+
+# def sanitize_user_input(text: str) -> str:
+#     """Remove potential prompt injection attempts"""
+#     # Remove common injection patterns
+#     dangerous_patterns = [
+#         "ignore previous instructions",
+#         "disregard all prior",
+#         "forget everything",
+#         "new instructions:",
+#         "system:",
+#         "assistant:"
+#     ]
+
+#     text_lower = text.lower()
+#     for pattern in dangerous_patterns:
+#         if pattern in text_lower:
+#             logger.warning(f"Potential prompt injection detected: {pattern}")
+#             return "[INVALID INPUT DETECTED]"
+
+#     return text
+
+# def truncate_response(text: str, max_length: int = 50000) -> str:
+#     """Ensure responses don't exceed reasonable size"""
+#     if len(text) > max_length:
+#         logger.warning(f"Response truncated from {len(text)} to {max_length} characters")
+#         return text[:max_length] + "\n\n[Response truncated due to length]"
+#     return text
 
 def analyze_portfolio(portfolio_data: Dict[str, Any]) -> str:
     """

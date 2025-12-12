@@ -99,6 +99,7 @@ class InstrumentClassification(BaseModel):
     name: str = Field(description="Name of the instrument")
     instrument_type: str = Field(description="Type: etf, stock, mutual_fund, bond_fund, etc.")
     current_price: float = Field(description="Current price per share in USD", gt=0)
+    rationale: str = Field(description="Detailed explanation of why these classifications were chosen, including specific factors considered")
 
     # Separate allocation objects
     allocation_asset_class: AllocationBreakdown = Field(description="Asset class breakdown")
@@ -198,7 +199,11 @@ async def classify_instrument(
             result = await Runner.run(agent, input=task, max_turns=5)
 
             # Extract the structured output from RunResult using final_output_as
-            return result.final_output_as(InstrumentClassification)
+            # return result.final_output_as(InstrumentClassification)
+            classification = result.final_output_as(InstrumentClassification)
+            full_json = classification.model_dump_json()
+            logger.info(f"Classification rationale: {classification.rationale} Full object: {full_json}")
+            return classification
 
     except Exception as e:
         logger.error(f"Error classifying {symbol}: {e}")
